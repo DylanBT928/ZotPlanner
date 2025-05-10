@@ -1,0 +1,109 @@
+/* Container spacing */
+.tab-content.space-y-6 {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-height: 70vh;
+  overflow-y: auto;
+  scrollbar-gutter: stable both-edges;
+}
+
+.tab-content.space-y-6::-webkit-scrollbar {
+  width: 12px;
+}
+
+.tab-content.space-y-6::-webkit-scrollbar-track {
+  background: var(--calendar-bg);
+}
+
+.tab-content.space-y-6::-webkit-scrollbar-thumb {
+  background-color: var(--calendar-separator);
+  border-radius: 6px;
+}
+
+.tab-content.space-y-6 {
+  scrollbar-width: thin;
+  scrollbar-color: var(--calendar-separator) var(--calendar-bg);
+}
+
+.tab-content h2,
+.tab-content h3 {
+  margin: 0;
+  padding: 0;
+}
+
+/* Forms for adding categories / assignments */
+.tab-content form {
+  border: 1px solid var(--calendar-separator);
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.tab-content form .flex,
+.tab-content form .flex-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+/* Inputs and selects */
+.tab-content input[type="text"],
+.tab-content input[type="number"],
+.tab-content select {
+  border: 1px solid var(--calendar-separator);
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+  background-color: var(--calendar-bg);
+  color: var(--text);
+}
+
+.tab-content input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.tab-content input[type="number"]::-webkit-inner-spin-button,
+.tab-content input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Buttons */
+.tab-content button {
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.tab-content button[type="submit"] {
+  background-color: var(--primary);
+  color: var(--text);
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+}
+
+.tab-content button[type="submit"]:hover {
+  background-color: var(--primary-dark);
+}
+
+/* Tables */
+.tab-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+}
+
+.tab-content th,
+.tab-content td {
+  border: 1px solid var(--calendar-separator);
+  padding: 0.5rem;
+  text-align: left;
+}
+
+/* Final grade display */
+.tab-content .text-lg.font-semibold {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
