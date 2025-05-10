@@ -5,7 +5,7 @@ const app = express();
 
 app.use(express.static("front"));
 
-app.get("/S3Url", async (req, res) => {
+app.get("/S3Url", async (_req, res) => {
   const url = await generateUploadURL();
   res.send({ url });
 });
