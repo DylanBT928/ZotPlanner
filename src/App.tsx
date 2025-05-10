@@ -1,38 +1,71 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import WeekCalendar from "./components/WeekCalendar";
-import reactLogo from "./assets/react.svg";
 import appLogo from "/src/assets/logo.svg";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [activeTab, setActiveTab] = useState<"todo" | "classes" | "grades">(
+    "todo"
+  );
+  const [darkMode, setDarkMode] = useState(false);
+
+  // toggle dark / light mode
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", darkMode);
+  }, [darkMode]);
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case "todo":
+        return <div className="tab-content">To-Do List goes here</div>;
+      case "classes":
+        return <div className="tab-content">Class Details go here</div>;
+      case "grades":
+        return <div className="tab-content">Grade Calculator goes here</div>;
+    }
+  };
 
   return (
-    <div className="app-container">
-      <WeekCalendar />
-      <div className="main-content">
-        <div>
-          <a href="https://vite.dev" target="_blank">
-            <img src={appLogo} className="logo" alt="Vite logo" />
-          </a>
-          <a href="https://react.dev" target="_blank">
-            <img src={reactLogo} className="logo react" alt="React logo" />
-          </a>
+    <>
+      <header className="top-bar">
+        <div className="brand">
+          <img src={appLogo} alt="logo" className="brand-logo" />
+          <span className="brand-title">ZotPlanner</span>
         </div>
-        <h1>Vite + React</h1>
-        <div className="card">
-          <button onClick={() => setCount((c) => c + 1)}>
-            count is {count}
+        <div className="top-buttons">
+          <button onClick={() => setDarkMode((d) => !d)}>
+            {darkMode ? "Light" : "Dark"}
           </button>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test HMR
-          </p>
+          <button>Settings</button>
         </div>
-        <p className="read-the-docs">
-          Click on the Vite and React logos to learn more
-        </p>
+      </header>
+      <div className="app-container">
+        <WeekCalendar />
+        <div className="main-content">
+          <nav className="tabs">
+            <button
+              className={activeTab === "todo" ? "active" : ""}
+              onClick={() => setActiveTab("todo")}
+            >
+              To-Do
+            </button>
+            <button
+              className={activeTab === "classes" ? "active" : ""}
+              onClick={() => setActiveTab("classes")}
+            >
+              Class Details
+            </button>
+            <button
+              className={activeTab === "grades" ? "active" : ""}
+              onClick={() => setActiveTab("grades")}
+            >
+              Grade Calculator
+            </button>
+          </nav>
+          {renderTabContent()}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
