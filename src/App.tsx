@@ -1,7 +1,7 @@
 import { useState } from "react";
 import WeekCalendar from "./components/WeekCalendar";
 import reactLogo from "./assets/react.svg";
-import appLogo from "/logo.svg";
+import appLogo from "/src/assets/logo.svg";
 import "./App.css";
 
 function App() {
