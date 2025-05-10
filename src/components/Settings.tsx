@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 
-const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
-  console.log();
-};
-
-function handleOnChange(e: React.FormEvent<HTMLInputElement>) {
-  const target = e.target as HTMLInputElement & {
-    files: FileList;
-  };
-  console.log("target", target.files);
-}
-
 const Settings: React.FC = () => {
+  const [file, setFile] = useState<File | undefined>();
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("file", file);
+  };
+
+  function handleOnChange(e: React.FormEvent<HTMLInputElement>) {
+    const target = e.target as HTMLInputElement & {
+      files: FileList;
+    };
+
+    setFile(target.files[0]);
+  }
+
   return (
     <div className="tab-content">
       Settings Details go here
