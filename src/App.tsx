@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
+import { FaSun, FaMoon, FaCog } from "react-icons/fa";
 import WeekCalendar from "./components/WeekCalendar";
+import Todo from "./components/Todo";
+import Classes from "./components/ClassDetails";
+import GradeCalculator from "./components/GradeCalculator";
 import appLogo from "/src/assets/logo.svg";
 import "./App.css";
 
@@ -7,7 +11,7 @@ function App() {
   const [activeTab, setActiveTab] = useState<"todo" | "classes" | "grades">(
     "todo"
   );
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
 
   // toggle dark / light mode
   useEffect(() => {
@@ -17,11 +21,11 @@ function App() {
   const renderTabContent = () => {
     switch (activeTab) {
       case "todo":
-        return <div className="tab-content">To-Do List goes here</div>;
+        return <Todo />;
       case "classes":
-        return <div className="tab-content">Class Details go here</div>;
+        return <Classes />;
       case "grades":
-        return <div className="tab-content">Grade Calculator goes here</div>;
+        return <GradeCalculator />;
     }
   };
 
@@ -34,9 +38,11 @@ function App() {
         </div>
         <div className="top-buttons">
           <button onClick={() => setDarkMode((d) => !d)}>
-            {darkMode ? "Light" : "Dark"}
+            {darkMode ? <FaSun /> : <FaMoon />}
           </button>
-          <button>Settings</button>
+          <button>
+            <FaCog />
+          </button>
         </div>
       </header>
       <div className="app-container">

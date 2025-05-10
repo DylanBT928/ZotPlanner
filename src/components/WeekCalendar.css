@@ -17,7 +17,7 @@
   border-radius: 0;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   padding: 16px;
-  font-family: sans-serif;
+  font-family: "Outfit", sans-serif;
   flex: 0 0 auto;
 }
 
@@ -45,6 +45,12 @@
   grid-template-columns: repeat(7, 1fr);
   gap: 8px;
   text-align: center;
+}
+
+.calendar-days .day:not(:last-child) {
+  border-right: 1px solid var(--calendar-separator);
+  padding-right: 8px;
+  box-sizing: border-box;
 }
 
 .day {

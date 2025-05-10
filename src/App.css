@@ -9,6 +9,7 @@
   --calendar-hover: #c5e9ff;
   --tab-border: #444;
   --tab-active-border: #b0efff;
+  --calendar-separator: rgba(0, 0, 0, 0.1);
 }
 
 :root.dark {
@@ -21,6 +22,7 @@
   --calendar-hover: #1b4a7c;
   --tab-border: #666;
   --tab-active-border: #b0efff;
+  --calendar-separator: rgba(255, 255, 255, 0.2);
 }
 
 /* Global */
@@ -88,29 +90,41 @@ body {
   align-items: center;
 }
 .brand-logo {
-  height: 1.5rem;
+  height: 2rem;
   margin-right: 0.5rem;
 }
 .brand-title {
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   font-weight: bold;
+  margin-top: 0.3rem;
   color: var(--text);
 }
+.top-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
 .top-buttons button {
-  margin-left: 0.75rem;
   background: none;
   border: none;
   color: var(--text);
   cursor: pointer;
+  padding: 0.3rem;
+  line-height: 0;
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Container */
 .app-container {
   display: flex;
   width: 100%;
-  height: calc(100% - 3rem); /* subtract top-bar height */
+  height: calc(100% - 3rem);
   overflow: hidden;
-  background: none; /* background handled on body */
+  background: none;
 }
 
 /* Calendar */
