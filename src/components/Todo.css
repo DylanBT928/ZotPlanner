@@ -30,6 +30,23 @@
   width: 100%;
 }
 
+/* Light‐mode override for date & time pickers */
+.tab-content input[type="date"] {
+  background-color: var(--calendar-bg);
+  color: var(--text);
+  border: 1px solid var(--calendar-separator);
+}
+.tab-content input[type="time"] {
+  background-color: var(--time-bg);
+  color: var(--text);
+  border: 1px solid var(--calendar-separator);
+}
+
+.tab-content input[type="date"]::-webkit-calendar-picker-indicator,
+.tab-content input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(0);
+}
+
 /* Sections wrapper */
 .tab-content > div.space-y-2 {
   display: flex;
@@ -81,9 +98,4 @@
 
 .tab-content .space-x-1 button:hover {
   text-decoration: underline;
-}
-
-.include-time {
-  flex-basis: 100%;
-  margin-top: 0.5rem;
 }

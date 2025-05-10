@@ -6,18 +6,33 @@ interface TodoItem {
   id: string;
   title: string;
   endDate: string; // YYYY-MM-DD
-  dueTime?: string; // HH:MM
+  time?: string; // HH:MM
   status: Status;
 }
 
 const Todo: React.FC = () => {
   const [items, setItems] = useState<TodoItem[]>([]);
   const [title, setTitle] = useState("");
-  const [dueTime, setDueTime] = useState("");
-  const [includeTime, setIncludeTime] = useState(false);
-  // default endDate to today in YYYY-MM-DD
-  const getToday = () => new Date().toISOString().slice(0, 10);
-  const [endDate, setEndDate] = useState<string>(getToday());
+  const getTomorrow = () => {
+    const d = new Date();
+    d.setDate(d.getDate() + 1);
+    return d.toISOString().slice(0, 10);
+  };
+  const [endDate, setEndDate] = useState<string>(getTomorrow());
+  const [time, setTime] = useState<string>("00:00");
+
+  const formatDate = (d: string) =>
+    new Date(d).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+
+  const formatTime = (t: string) =>
+    new Date(`1970-01-01T${t}`).toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+    });
 
   const addItem = () => {
     if (!title || !endDate) return;
@@ -26,17 +41,15 @@ const Todo: React.FC = () => {
       {
         id: Date.now().toString(),
         title,
-        dueTime: includeTime ? dueTime : undefined,
         endDate,
+        time: time || undefined,
         status: "notStarted",
       },
     ]);
 
     setTitle("");
-    setDueTime("");
-    setIncludeTime(false);
-    // reset endDate back to today
-    setEndDate(getToday());
+    setEndDate(getTomorrow());
+    setTime("00:00");
   };
 
   const move = (id: string, status: Status) =>
@@ -69,7 +82,7 @@ const Todo: React.FC = () => {
                 addItem();
               }
             }}
-            className="w-full border rounded px-2 py-1"
+            className="border rounded px-2 py-1 flex-1"
           />
         </div>
         {/* Row 2: End date + time */}
@@ -81,24 +94,12 @@ const Todo: React.FC = () => {
             onChange={(e) => setEndDate(e.target.value)}
             className="border rounded px-2 py-1"
           />
-          {includeTime && (
-            <input
-              type="time"
-              value={dueTime}
-              onChange={(e) => setDueTime(e.target.value)}
-              className="border rounded px-2 py-1"
-            />
-          )}
-          {/* force this checkbox onto its own line */}
-          <label className="include-time flex items-center space-x-1">
-            <input
-              type="checkbox"
-              checked={includeTime}
-              onChange={(e) => setIncludeTime(e.target.checked)}
-              className="form-checkbox"
-            />
-            <span className="text-sm">Include time</span>
-          </label>
+          <input
+            type="time"
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
+            className="border rounded px-2 py-1"
+          />
         </div>
         <button
           type="submit"
@@ -122,7 +123,8 @@ const Todo: React.FC = () => {
                   <div>
                     <div className="font-medium">{i.title}</div>
                     <div className="text-sm text-gray-500">
-                      {i.dueTime ?? ""} {i.endDate}
+                      {formatDate(i.endDate)}
+                      {i.time ? ` ${formatTime(i.time)}` : ""}
                     </div>
                   </div>
                   <div className="space-x-1">
