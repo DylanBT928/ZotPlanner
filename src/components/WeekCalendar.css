@@ -7,18 +7,20 @@
 }
 
 .week-calendar {
-  width: 240px;
+  width: 60%;
   min-width: 40%;
   max-width: 60%;
   resize: horizontal;
   overflow: auto;
   box-sizing: border-box;
-  background: #282828;
+  background: var(--calendar-bg);
   border-radius: 0;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 6px var(--calendar-shadow);
   padding: 16px;
   font-family: "Outfit", sans-serif;
   flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .calendar-header {
@@ -41,30 +43,36 @@
 }
 
 .calendar-days {
+  flex: 1 1 auto;
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
+  gap: 0;
   text-align: center;
 }
 
-.calendar-days .day:not(:last-child) {
-  border-right: 1px solid var(--calendar-separator);
-  padding-right: 8px;
+.calendar-days .day {
   box-sizing: border-box;
-}
-
-.day {
   padding: 8px 4px;
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
-.day:hover {
-  background: #377292;
+.calendar-days .day:hover {
+  background: var(--calendar-hover);
+}
+
+.day-inner {
+  margin: 0 4px;
+  padding: 8px 4px;
+  border-radius: 8px;
+}
+
+.day-inner:hover {
+  background: var(--calendar-hover);
 }
 
 .weekday {
   font-size: 0.75rem;
-  color: #666;
+  color: var(--text);
 }
 
 .day-number {
