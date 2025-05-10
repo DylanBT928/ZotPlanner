@@ -7,19 +7,27 @@
 
 **ZotPlanner** is a smart, all-in-one productivity tool designed for UCI students. It helps students organize class schedules, deadlines, and track their coursework in a clean, intuitive interface. Users can upload syllabi, build custom weekly planners, and stay on top of assignments and study sessions. Built with React and powered by AWS, **ZotPlanner** streamlines academic planning for a more productive quarter.
 
-## 🚨 Problem
+### 🚨 Problem
 
 UCI students juggle multiple classes, deadlines, and campus events across scattered tools (Canvas, emails, syllabi, calendars). This leads to missed deadlines, stress, and disorganization.
 
-## ✅ Solution
+### ✅ Solution
 
 **ZotPlanner** is an all-in-one planner designed to simplify student life by consolidating everything in one place.
 
+## ✨ Features
+
+- Upload syllabi and automatically extract class information using Amazon Bedrock
+- Build and customize a weekly calendar based on class schedules
+- Track assignments and tasks in a clean to-do interface
+- View grading breakdowns and calculate estimated course grades
+- Stay on top of upcoming deadlines with a unified academic dashboard
+
 ## ⚙️ Tech Stack
 
-| Frontend                  | Hosting     |
-| ------------------------- | ----------- |
-| React + TypeScript (Vite) | AWS Amplify |
+| Frontend                      | Backend                            | AI & Cloud                                   | Tooling              |
+| ----------------------------- | ---------------------------------- | -------------------------------------------- | -------------------- |
+| React, TypeScript (Vite), CSS | Node.js, Express (ESM), AWS Lambda | AWS Amplify, Amazon Bedrock (Claude 3 Haiku) | ESLint, AWS SDK, npm |
 
 ## 🚀 Installation
 
