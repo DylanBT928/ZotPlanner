@@ -3,9 +3,19 @@ import React, { useState } from "react";
 const Settings: React.FC = () => {
   const [file, setFile] = useState<File | undefined>();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("file", file);
+
+    const { url } = await fetch("/S3Url").then((res) => res.json());
+    console.log(url);
+
+    await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      body: file,
+    });
   };
 
   function handleOnChange(e: React.FormEvent<HTMLInputElement>) {
