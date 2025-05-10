@@ -13,7 +13,7 @@
 }
 
 :root.dark {
-  /* Dark theme overrides */
+  /* Dark theme */
   --bg: #121212;
   --text: #ddd;
   --header-bg: #333;

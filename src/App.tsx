@@ -5,12 +5,13 @@ import Todo from "./components/Todo";
 import Classes from "./components/ClassDetails";
 import GradeCalculator from "./components/GradeCalculator";
 import appLogo from "/src/assets/logo.svg";
+import Settings from "./components/Settings";
 import "./App.css";
 
 function App() {
-  const [activeTab, setActiveTab] = useState<"todo" | "classes" | "grades">(
-    "todo"
-  );
+  const [activeTab, setActiveTab] = useState<
+    "todo" | "classes" | "grades" | "settings"
+  >("todo");
   const [darkMode, setDarkMode] = useState(true);
 
   // toggle dark / light mode
@@ -26,6 +27,8 @@ function App() {
         return <Classes />;
       case "grades":
         return <GradeCalculator />;
+      case "settings":
+        return <Settings />;
     }
   };
 
@@ -40,7 +43,10 @@ function App() {
           <button onClick={() => setDarkMode((d) => !d)}>
             {darkMode ? <FaSun /> : <FaMoon />}
           </button>
-          <button>
+          <button
+            className={activeTab === "settings" ? "active" : ""}
+            onClick={() => setActiveTab("settings")}
+          >
             <FaCog />
           </button>
         </div>
