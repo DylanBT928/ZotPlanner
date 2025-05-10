@@ -1,5 +1,6 @@
 import aws from "aws-sdk";
 import dotenv from "dotenv";
+import { S3 } from "aws-sdk";
 
 dotenv.config();
 
@@ -15,18 +16,28 @@ const s3 = new aws.S3({
   signatureVersion: "v4",
 });
 
-function getPresignUrlPromiseFunction(s3, s3Params): Promise<string> {
-  return new Promise(async (resolve, reject) => {
-    try {
-      await s3.getSignedUrl("putObject", s3Params, function (err, data) {
+interface S3PresignParams {
+  Bucket: string;
+  Key: string;
+  Expires: number;
+  ContentType: string;
+}
+
+function getPresignUrlPromiseFunction(
+  s3: S3,
+  s3Params: S3PresignParams
+): Promise<string> {
+  return new Promise<string>((resolve, reject) => {
+    s3.getSignedUrl(
+      "putObject",
+      s3Params,
+      function (err: Error | null, data: string) {
         if (err) {
           return reject(err);
         }
         resolve(data);
-      });
-    } catch (error) {
-      return reject(error);
-    }
+      }
+    );
   });
 }
 
