@@ -6,6 +6,7 @@ import Classes from "./components/ClassDetails";
 import GradeCalculator from "./components/GradeCalculator";
 import appLogo from "/src/assets/logo.svg";
 import Settings from "./components/Settings";
+import Example from "./components/Login";
 import "./App.css";
 
 function App() {
@@ -49,6 +50,8 @@ function App() {
           >
             <FaCog />
           </button>
+          {/* <button className="login">Login</button> */}
+          {Example()}
         </div>
       </header>
       <div className="app-container">

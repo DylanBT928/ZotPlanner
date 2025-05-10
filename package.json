@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && node server.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -14,7 +14,9 @@
     "@aws-sdk/client-dynamodb": "^3.806.0",
     "@aws-sdk/client-s3": "^3.806.0",
     "@aws-sdk/credential-providers": "^3.806.0",
+    "@headlessui/react": "^2.2.2",
     "aws-sdk": "^2.1692.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "react": "^19.1.0",
@@ -23,6 +25,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
+    "@types/cors": "^2.8.18",
     "@types/express": "^5.0.1",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",

@@ -5,8 +5,14 @@ const Settings: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const { url } = await fetch("/S3Url").then((res) => res.json());
+    try {
+      const { url } = await fetch("http://localhost:8080/S3Url").then((res) =>
+        res.json()
+      );
+    } catch (e) {
+      console.log(e);
+    }
+    /*
     console.log(url);
 
     await fetch(url, {
@@ -15,7 +21,7 @@ const Settings: React.FC = () => {
         "Content-Type": "multipart/form-data",
       },
       body: file,
-    });
+      */
   };
 
   function handleOnChange(e: React.FormEvent<HTMLInputElement>) {
@@ -28,10 +34,9 @@ const Settings: React.FC = () => {
 
   return (
     <div className="tab-content">
-      Settings Details go here
       <form onSubmit={handleSubmit}>
         <input type="file" name="image" onChange={handleOnChange} />
-        <button type="submit"> Submit </button>
+        <button type="submit">Submit</button>
       </form>
     </div>
   );

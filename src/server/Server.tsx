@@ -1,11 +1,16 @@
 import express from "express";
 import { generateUploadURL } from "./S3.tsx";
+import cors from "cors";
 
 const app = express();
 
-app.use(express.static("front"));
+app.use(cors());
 
-app.get("/S3Url", async (_req, res) => {
+app.use(express.static("components"));
+
+app.put("/S3Url", async (_req, res) => {
+  console.log("Am I here?");
+
   const url = await generateUploadURL();
   res.send({ url });
 });
