@@ -1,41 +1,58 @@
 import React, { useState } from "react";
-import {
-  Description,
-  Dialog,
-  DialogPanel,
-  DialogTitle,
-} from "@headlessui/react";
 import "./Login.css";
 
-function Example() {
-  let [isOpen, setIsOpen] = useState(false);
-  return (
-    <>
-      <button onClick={() => setIsOpen(true)}>Open dialog</button>
-      <Dialog
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
-        className="relative z-50"
-      >
-        <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-          <DialogPanel className="max-w-lg space-y-4 border bg-white p-12">
-            <DialogTitle className="font-bold">Deactivate account</DialogTitle>
-            <Description>
-              This will permanently deactivate your account
-            </Description>
-            <p>
-              Are you sure you want to deactivate your account? All of your data
-              will be permanently removed.
-            </p>
-            <div className="flex gap-4">
-              <button onClick={() => setIsOpen(false)}>Cancel</button>
-              <button onClick={() => setIsOpen(false)}>Deactivate</button>
-            </div>
-          </DialogPanel>
-        </div>
-      </Dialog>
-    </>
-  );
+interface LoginProps {
+  onLoad: (id: string) => void;
+  onSave: (id: string) => void;
 }
 
-export default Example;
+const Login: React.FC<LoginProps> = ({ onLoad, onSave }) => {
+  const [id, setId] = useState("");
+
+  const handleLoad = () => {
+    if (id.trim()) onLoad(id.trim());
+  };
+
+  const handleSave = () => {
+    if (id.trim()) onSave(id.trim());
+  };
+
+  return (
+    <div className="login-overlay">
+      <div className="login-panel">
+        <h2 className="login-title">Load or Save Session</h2>
+        <input
+          type="text"
+          className="login-input"
+          placeholder="Enter session ID"
+          value={id}
+          onChange={(e) => setId(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              handleLoad();
+            }
+          }}
+        />
+        <div className="login-buttons">
+          <button
+            className="btn load"
+            disabled={!id.trim()}
+            onClick={handleLoad}
+          >
+            Load
+          </button>
+          <button
+            className="btn save"
+            disabled={!id.trim()}
+            onClick={handleSave}
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Login;

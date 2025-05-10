@@ -6,7 +6,7 @@ import Classes from "./components/ClassDetails";
 import GradeCalculator from "./components/GradeCalculator";
 import appLogo from "/src/assets/logo.svg";
 import Settings from "./components/Settings";
-import Example from "./components/Login";
+import Login from "./components/Login";
 import "./App.css";
 
 function App() {
@@ -14,11 +14,22 @@ function App() {
     "todo" | "classes" | "grades" | "settings"
   >("todo");
   const [darkMode, setDarkMode] = useState(true);
+  const [showLogin, setShowLogin] = useState(false);
 
   // toggle dark / light mode
   useEffect(() => {
     document.documentElement.classList.toggle("dark", darkMode);
   }, [darkMode]);
+
+  const handleLoadSession = (id: string) => {
+    console.log("Load session:", id);
+    setShowLogin(false);
+  };
+
+  const handleSaveSession = (id: string) => {
+    console.log("Save session:", id);
+    setShowLogin(false);
+  };
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -50,8 +61,7 @@ function App() {
           >
             <FaCog />
           </button>
-          {/* <button className="login">Login</button> */}
-          {Example()}
+          <button onClick={() => setShowLogin(true)}>Login</button>
         </div>
       </header>
       <div className="app-container">
@@ -80,6 +90,9 @@ function App() {
           {renderTabContent()}
         </div>
       </div>
+      {showLogin && (
+        <Login onLoad={handleLoadSession} onSave={handleSaveSession} />
+      )}
     </>
   );
 }
