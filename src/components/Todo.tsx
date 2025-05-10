@@ -85,7 +85,7 @@ const Todo: React.FC = () => {
             className="border rounded px-2 py-1 flex-1"
           />
         </div>
-        {/* Row 2: End date + time */}
+        {/* Row 2: End date, time, and Add button */}
         <div className="flex items-center gap-2">
           <input
             type="date"
@@ -100,13 +100,13 @@ const Todo: React.FC = () => {
             onChange={(e) => setTime(e.target.value)}
             className="border rounded px-2 py-1"
           />
+          <button
+            type="submit"
+            className="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700"
+          >
+            Add
+          </button>
         </div>
-        <button
-          type="submit"
-          className="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700"
-        >
-          Add
-        </button>
       </form>
 
       {sections.map((sec) => (
