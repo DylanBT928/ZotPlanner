@@ -8,7 +8,7 @@
   --calendar-shadow: rgba(0, 0, 0, 0.1);
   --calendar-hover: #c5e9ff;
   --tab-border: #444;
-  --tab-active-border: #b0efff;
+  --tab-active-border: #185b6c;
   --calendar-separator: rgba(0, 0, 0, 0.1);
 }
 
@@ -19,7 +19,7 @@
   --header-bg: #333;
   --calendar-bg: #282828;
   --calendar-shadow: rgba(0, 0, 0, 0.1);
-  --calendar-hover: #1b4a7c;
+  --calendar-hover: #194069;
   --tab-border: #666;
   --tab-active-border: #b0efff;
   --calendar-separator: rgba(255, 255, 255, 0.2);
@@ -130,7 +130,6 @@ body {
 /* Calendar */
 .week-calendar {
   flex: 0 0 auto;
-  width: 240px; /* initial width */
   background: var(--calendar-bg);
   box-shadow: 0 2px 6px var(--calendar-shadow);
   padding: 16px;
@@ -188,10 +187,12 @@ body {
   border: none;
   color: var(--text);
   cursor: pointer;
+  border-radius: 0;
 }
 .tabs button.active {
   border-bottom: 2px solid var(--tab-active-border);
   font-weight: bold;
+  border-radius: 0;
 }
 
 /* Tab content */
