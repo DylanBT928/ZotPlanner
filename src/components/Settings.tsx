@@ -3,18 +3,36 @@ import { SignatureV4 } from "@aws-sdk/signature-v4";
 import { Sha256 } from "@aws-crypto/sha256-browser";
 import { HttpRequest } from "@aws-sdk/protocol-http";
 
-const accessKeyId = import.meta.env.VITE_AWS_ACCESS_KEY_ID as string;
-const secretAccessKey = import.meta.env.VITE_AWS_SECRET_ACCESS_KEY as string;
-if (!accessKeyId || !secretAccessKey) {
+const accessKeyIdPut = import.meta.env.VITE_AWS_ACCESS_KEY_ID_PUT as string;
+const secretAccessKeyPut = import.meta.env
+  .VITE_AWS_SECRET_ACCESS_KEY_PUT as string;
+const accessKeyIdGet = import.meta.env.VITE_AWS_ACCESS_KEY_ID_GET as string;
+const secretAccessKeyGet = import.meta.env
+  .VITE_AWS_SECRET_ACCESS_KEY_GET as string;
+if (
+  !accessKeyIdPut ||
+  !secretAccessKeyPut ||
+  !accessKeyIdGet ||
+  !secretAccessKeyGet
+) {
   throw new Error("Missing AWS credentials – check your .env");
 }
 
 const region = "us-west-2";
-const apiHost = "d52lrc4a8e.execute-api.us-west-2.amazonaws.com";
-const apiBasePath = "/v2/zotplanner-syllabi";
+const apiHostPut = "d52lrc4a8e.execute-api.us-west-2.amazonaws.com";
+const apiBasePathPut = "/v2/zotplanner-syllabi";
+const apiHostGet = "vc50an6o9e.execute-api.us-west-2.amazonaws.com";
+
+interface ParsedClass {
+  id: string;
+  name: string;
+  // …other fields
+}
 
 const Settings: React.FC = () => {
   const [file, setFile] = useState<File>();
+  const [sessionId, setSessionId] = useState<string>("");
+  const [classes, setClasses] = useState<ParsedClass[]>([]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -23,17 +41,20 @@ const Settings: React.FC = () => {
       return;
     }
     try {
-      // 1) build and sign the HTTP request
+      // 1) build and sign the HTTP request for PUT
       const signer = new SignatureV4({
-        credentials: { accessKeyId, secretAccessKey },
+        credentials: {
+          accessKeyId: accessKeyIdPut,
+          secretAccessKey: secretAccessKeyPut,
+        },
         region,
         service: "execute-api",
         sha256: Sha256,
       });
-      const path = `${apiBasePath}/${encodeURIComponent(file.name)}`;
+      const path = `${apiBasePathPut}/${encodeURIComponent(file.name)}`;
       const request = new HttpRequest({
         protocol: "https:",
-        hostname: apiHost,
+        hostname: apiHostPut,
         method: "PUT",
         path,
         headers: { "content-type": file.type },
@@ -41,17 +62,56 @@ const Settings: React.FC = () => {
       });
       const signed = await signer.sign(request);
 
-      // 2) send the signed request with binary body
-      const res = await fetch(`https://${apiHost}${path}`, {
+      // 2) send the signed PUT
+      const res = await fetch(`https://${apiHostPut}${path}`, {
         method: request.method,
         headers: signed.headers,
         body: file,
       });
       if (!res.ok) throw new Error(`Upload failed (${res.status})`);
       alert("Upload successful!");
+
+      // store session ID and auto-fetch classes
+      const id = file.name;
+      setSessionId(id);
+      await fetchClasses(id);
     } catch (err) {
       console.error("Upload error:", err);
       alert("Upload failed, see console");
+    }
+  };
+
+  // GET classes from API Gateway & DynamoDB
+  const fetchClasses = async (_userId: string) => {
+    try {
+      const signer = new SignatureV4({
+        credentials: {
+          accessKeyId: accessKeyIdGet,
+          secretAccessKey: secretAccessKeyGet,
+        },
+        region,
+        service: "execute-api",
+        sha256: Sha256,
+      });
+      //const path = `/prod/classes?userId=${encodeURIComponent(userId)}`;
+      const path = `/prod/classes?userId=test-user`;
+      const request = new HttpRequest({
+        protocol: "https:",
+        hostname: apiHostGet,
+        method: "GET",
+        path,
+      });
+      const signed = await signer.sign(request);
+
+      const res = await fetch(`https://${apiHostGet}${path}`, {
+        method: "GET",
+        headers: signed.headers,
+      });
+      if (!res.ok) throw new Error(`Fetch failed (${res.status})`);
+      const data = await res.json();
+      setClasses(data);
+    } catch (err) {
+      console.error("Fetch classes error:", err);
     }
   };
 
@@ -66,6 +126,39 @@ const Settings: React.FC = () => {
         <input type="file" accept=".txt,.pdf" onChange={handleOnChange} />
         <button type="submit">Submit</button>
       </form>
+
+      {sessionId && (
+        <button onClick={() => fetchClasses(sessionId)}>Refresh Classes</button>
+      )}
+
+      {classes.length > 0 && (
+        <div className="settings-classes">
+          <h3>Classes for "{sessionId}"</h3>
+          <ul>
+            {classes.map((c, idx) => (
+              <li key={c.id ?? idx}>{c.name}</li>
+            ))}
+          </ul>
+          {/* Raw JSON output box */}
+          <div style={{ marginTop: "1rem" }}>
+            <h4>Raw JSON Response</h4>
+            <textarea
+              readOnly
+              rows={8}
+              style={{
+                width: "100%",
+                fontFamily: "monospace",
+                fontSize: "0.875rem",
+                padding: "0.5rem",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+                background: "#505050",
+              }}
+              value={JSON.stringify(classes, null, 2)}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };
