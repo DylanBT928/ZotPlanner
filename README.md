@@ -25,9 +25,11 @@ UCI students juggle multiple classes, deadlines, and campus events across scatte
 
 ## ⚙️ Tech Stack
 
-| Frontend                      | Backend                | AWS Services                                                                 |
-| ----------------------------- | ---------------------- | ---------------------------------------------------------------------------- |
-| React, TypeScript (Vite), CSS | Node.js, Express (ESM) | Cognito, S3, AWS Amplify, IAM, API Gateway, Lambda, Amazon Bedrock, DynamoDB |
+| Category     | Technologies                                             |
+| ------------ | -------------------------------------------------------- |
+| AWS Services | Lambda, API Gateway, S3, Amplify, DynamoDB, Bedrock, IAM |
+| Frontend     | TypeScript, Vite, CSS                                    |
+| Backend      | Node.js, npm                                             |
 
 ## 🚀 Installation
 
