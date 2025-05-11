@@ -33,15 +33,24 @@ const ClassDetails: React.FC = () => {
     <div className="tab-content class-details">
       <h2>{detail.className}</h2>
 
+      {/* Assignments & Weights */}
+      <ul className="assign-list">
+        {detail.assignments.map((a) => (
+          <li key={a.name}>
+            {a.name}: {a.weight}%
+          </li>
+        ))}
+      </ul>
+
       {/* Grading Breakdown Pie Chart */}
       <div className="grading-chart">
-        <ResponsiveContainer width="100%" height={300}>
-          <PieChart margin={{ top: 20, right: 0, bottom: 0, left: 0 }}>
+        <ResponsiveContainer width="100%" height={500}>
+          <PieChart margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
             <Pie
               data={gradingData}
               dataKey="weight"
               nameKey="category"
-              outerRadius={120}
+              outerRadius={200}
               label
             >
               {gradingData.map((_entry, idx) => (
