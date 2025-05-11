@@ -25,11 +25,18 @@ UCI students juggle multiple classes, deadlines, and campus events across scatte
 
 ## ⚙️ Tech Stack
 
-| Category     | Technologies                                             |
-| ------------ | -------------------------------------------------------- |
-| AWS Services | Lambda, API Gateway, S3, Amplify, DynamoDB, Bedrock, IAM |
-| Frontend     | TypeScript, Vite, CSS                                    |
-| Backend      | Node.js, npm                                             |
+| Category     | Technologies                                                           |
+| ------------ | ---------------------------------------------------------------------- |
+| AWS Services | S3, Lambda, API Gateway, DynamoDB, Bedrock, IAM, Amplify (Hosting/CDN) |
+| Frontend     | React, TypeScript, Vite, CSS                                           |
+| Backend      | Node.js, AWS SDK (v3), Lambda Functions                                |
+| Auth & Infra | IAM, CORS Config, API Gateway Proxy Integration                        |
+
+## 🧑‍💻 Authors
+
+- **Dylan Tran** – Frontend Implementation, UI/UX Design, Backend, Amplify, Lambda, DynamoDB, S3, IAM, Bedrock, API Gateway
+- **Austin Phan** – Frontend Logic + Architecture, Backend, Amplify, S3, IAM, API Gateway
+- **Thomas Phan** - Project Collaborator
 
 ## 🚀 Installation
 
@@ -39,13 +46,3 @@ cd ZotPlanner
 npm install
 npm run dev
 ```
-
-## 🧑‍💻 Authors
-
-- Dylan Tran
-- Austin Phan
-- Thomas Phan
-
-## 📝 License
-
-This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
