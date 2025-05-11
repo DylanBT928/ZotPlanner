@@ -31,8 +31,12 @@ interface ParsedClass {
 
 const Settings: React.FC = () => {
   const [file, setFile] = useState<File>();
-  const [_sessionId, setSessionId] = useState<string>("");
-  const [classes, setClasses] = useState<ParsedClass[]>([]);
+  const [_sessionId, setSessionId] = useState<string>(
+    () => localStorage.getItem("sessionId") || ""
+  );
+  const [classes, setClasses] = useState<ParsedClass[]>(() =>
+    JSON.parse(localStorage.getItem("classes") || "[]")
+  );
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -69,11 +73,11 @@ const Settings: React.FC = () => {
         body: file,
       });
       if (!res.ok) throw new Error(`Upload failed (${res.status})`);
-      alert("Upload successful!");
 
-      // store session ID and auto-fetch classes
+      // store session ID, persist it, and fetch classes
       const id = file.name;
       setSessionId(id);
+      localStorage.setItem("sessionId", id);
       await fetchClasses(id);
     } catch (err) {
       console.error("Upload error:", err);
@@ -110,6 +114,8 @@ const Settings: React.FC = () => {
       if (!res.ok) throw new Error(`Fetch failed (${res.status})`);
       const data = await res.json();
       setClasses(data);
+      // persist classes JSON
+      localStorage.setItem("classes", JSON.stringify(data));
     } catch (err) {
       console.error("Fetch classes error:", err);
     }
