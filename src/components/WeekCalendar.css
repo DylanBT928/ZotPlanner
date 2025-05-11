@@ -99,23 +99,33 @@
 }
 
 /* colored variants */
-.task-dot.notStarted {
-  background: red;
-}
-
-.task-dot.inProgress {
-  background: blue;
-}
-
-.task-dot.completed {
-  background: green;
-}
-
-.todo-item {
-  font-size: 0.75rem;
+.notStarted {
+  font-size: 1.2rem;
   margin-top: 2px;
   padding: 2px 4px;
-  background: var(--calendar-separator);
+  background: #d75f5f;
+  border-radius: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.inProgress {
+  font-size: 1.2rem;
+  margin-top: 2px;
+  padding: 2px 4px;
+  background: #4c9cd9;
+  border-radius: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.completed {
+  font-size: 1.2rem;
+  margin-top: 2px;
+  padding: 2px 4px;
+  background: #60ae3f;
   border-radius: 4px;
   overflow: hidden;
   text-overflow: ellipsis;

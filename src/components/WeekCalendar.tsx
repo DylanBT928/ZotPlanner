@@ -58,7 +58,7 @@ const WeekCalendar: React.FC<WeekCalendarProps> = ({ items }) => {
               </div>
               <div className="day-number">{d.getDate()}</div>
               {dayTasks.map((t) => (
-                <div key={t.id} className="todo-item">
+                <div key={t.id} className={t.status}>
                   {t.title}
                 </div>
               ))}
