@@ -36,7 +36,7 @@ UCI students juggle multiple classes, deadlines, and campus events across scatte
 
 - **Dylan Tran** – Frontend Implementation, UI/UX Design, Backend, Amplify, Lambda, DynamoDB, S3, IAM, Bedrock, API Gateway
 - **Austin Phan** – Frontend Logic + Architecture, Backend, Amplify, S3, IAM, API Gateway
-- **Thomas Phan** - Project Collaborator
+- **Thomas Phan** - Frontend
 
 ## 🚀 Installation
 

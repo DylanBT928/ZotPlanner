@@ -43,9 +43,13 @@ const WeekCalendar: React.FC<WeekCalendarProps> = ({ items }) => {
   return (
     <div className="week-calendar">
       <div className="calendar-header">
-        <button onClick={prevWeek}>&lt;</button>
+        <button onClick={prevWeek} className="calendar-arrow">
+          &lt;
+        </button>
         <span className="date-range">{formatDateRange(days[0], days[6])}</span>
-        <button onClick={nextWeek}>&gt;</button>
+        <button onClick={nextWeek} className="calendar-arrow">
+          &gt;
+        </button>
       </div>
       <div className="calendar-days">
         {days.map((d, i) => {
