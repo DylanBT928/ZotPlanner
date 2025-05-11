@@ -1,4 +1,5 @@
 import React from "react";
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
 interface ParsedClass {
   classId: string;
@@ -15,13 +16,42 @@ const ClassDetails: React.FC = () => {
   const detail: ParsedClass | null =
     classes.find((c) => c.classId === sessionId) ?? classes[0] ?? null;
 
-  return (
-    <div className="tab-content">
-      {detail ? (
-        <h2>{detail.className}</h2>
-      ) : (
+  if (!detail) {
+    return (
+      <div className="tab-content">
         <p>No class data found. Please upload a syllabus in Settings.</p>
-      )}
+      </div>
+    );
+  }
+
+  const gradingData = Object.entries(detail.grading).map(
+    ([category, weight]) => ({ category, weight })
+  );
+  const COLORS = ["#8884d8", "#82ca9d", "#ffc658", "#ff8042", "#8dd1e1"];
+
+  return (
+    <div className="tab-content class-details">
+      <h2>{detail.className}</h2>
+
+      {/* Grading Breakdown Pie Chart */}
+      <div className="grading-chart">
+        <ResponsiveContainer width="100%" height={300}>
+          <PieChart margin={{ top: 20, right: 0, bottom: 0, left: 0 }}>
+            <Pie
+              data={gradingData}
+              dataKey="weight"
+              nameKey="category"
+              outerRadius={120}
+              label
+            >
+              {gradingData.map((_entry, idx) => (
+                <Cell key={`cell-${idx}`} fill={COLORS[idx % COLORS.length]} />
+              ))}
+            </Pie>
+            <Tooltip formatter={(val: number) => `${val}%`} />
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 };
