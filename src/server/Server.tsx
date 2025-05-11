@@ -4,15 +4,15 @@ import cors from "cors";
 
 const app = express();
 
-app.use(cors());
-
-app.use(express.static("components"));
+// allow your front-end origin
+app.use(cors({ origin: "http://localhost:8080" }));
+app.use(express.json());
 
 app.put("/S3Url", async (_req, res) => {
   console.log("Am I here?");
 
   const url = await generateUploadURL();
-  res.send({ url });
+  res.json({ url });
 });
 
 app.listen(8080, () => console.log("listening on port 8080"));
