@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
-const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
-const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
+//const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
+//const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 
 const Settings: React.FC = () => {
-  const [file, setFile] = useState<File | undefined>();
+  const [_file, setFile] = useState<File | undefined>();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
