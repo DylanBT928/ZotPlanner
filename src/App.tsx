@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { FaSun, FaMoon, FaCog } from "react-icons/fa";
 import WeekCalendar from "./components/WeekCalendar";
 import Todo from "./components/Todo";
+import type { TodoItem } from "./components/Todo";
 import Classes from "./components/ClassDetails";
 import GradeCalculator from "./components/GradeCalculator";
 import appLogo from "/src/assets/logo.svg";
@@ -15,8 +16,8 @@ function App() {
   >("todo");
   const [darkMode, setDarkMode] = useState(true);
   const [showLogin, setShowLogin] = useState(false);
+  const [tasks, setTasks] = useState<TodoItem[]>([]);
 
-  // toggle dark / light mode
   useEffect(() => {
     document.documentElement.classList.toggle("dark", darkMode);
   }, [darkMode]);
@@ -34,7 +35,7 @@ function App() {
   const renderTabContent = () => {
     switch (activeTab) {
       case "todo":
-        return <Todo />;
+        return <Todo items={tasks} setItems={setTasks} />;
       case "classes":
         return <Classes />;
       case "grades":
@@ -65,7 +66,7 @@ function App() {
         </div>
       </header>
       <div className="app-container">
-        <WeekCalendar />
+        <WeekCalendar items={tasks} />
         <div className="main-content">
           <nav className="tabs">
             <button

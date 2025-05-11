@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "./Todo.css";
 
-type Status = "inProgress" | "notStarted" | "completed";
-interface TodoItem {
+export type Status = "inProgress" | "notStarted" | "completed";
+
+export interface TodoItem {
   id: string;
   title: string;
   endDate: string; // YYYY-MM-DD
@@ -10,16 +11,22 @@ interface TodoItem {
   status: Status;
 }
 
-const Todo: React.FC = () => {
-  const [items, setItems] = useState<TodoItem[]>([]);
+interface TodoProps {
+  items: TodoItem[];
+  setItems: React.Dispatch<React.SetStateAction<TodoItem[]>>;
+}
+const Todo: React.FC<TodoProps> = ({ items, setItems }) => {
   const [title, setTitle] = useState("");
   const getTomorrow = () => {
     const d = new Date();
     d.setDate(d.getDate() + 1);
-    return d.toISOString().slice(0, 10);
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, "0");
+    const dd = String(d.getDate()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}`;
   };
-  const [endDate, setEndDate] = useState<string>(getTomorrow());
-  const [time, setTime] = useState<string>("00:00");
+  const [endDate, setEndDate] = useState(getTomorrow());
+  const [time, setTime] = useState("00:00");
 
   const formatDate = (d: string) =>
     new Date(d).toLocaleDateString("en-US", {
@@ -27,7 +34,6 @@ const Todo: React.FC = () => {
       day: "numeric",
       year: "numeric",
     });
-
   const formatTime = (t: string) =>
     new Date(`1970-01-01T${t}`).toLocaleTimeString("en-US", {
       hour: "numeric",
@@ -38,15 +44,8 @@ const Todo: React.FC = () => {
     if (!title || !endDate) return;
     setItems([
       ...items,
-      {
-        id: Date.now().toString(),
-        title,
-        endDate,
-        time: time || undefined,
-        status: "notStarted",
-      },
+      { id: Date.now().toString(), title, endDate, time, status: "notStarted" },
     ]);
-
     setTitle("");
     setEndDate(getTomorrow());
     setTime("00:00");
@@ -55,10 +54,10 @@ const Todo: React.FC = () => {
   const move = (id: string, status: Status) =>
     setItems(items.map((i) => (i.id === id ? { ...i, status } : i)));
 
-  const sections: { label: string; key: Status }[] = [
-    { label: "In Progress", key: "inProgress" },
-    { label: "Not Started", key: "notStarted" },
-    { label: "Completed", key: "completed" },
+  const sections = [
+    { label: "In Progress", key: "inProgress" as Status },
+    { label: "Not Started", key: "notStarted" as Status },
+    { label: "Completed", key: "completed" as Status },
   ];
 
   return (
@@ -76,16 +75,12 @@ const Todo: React.FC = () => {
             placeholder="Task title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                addItem();
-              }
-            }}
+            onKeyDown={(e) =>
+              e.key === "Enter" && (e.preventDefault(), addItem())
+            }
             className="border rounded px-2 py-1 flex-1"
           />
         </div>
-        {/* Row 2: End date, time, and Add button */}
         <div className="flex items-center gap-2">
           <input
             type="date"
@@ -118,13 +113,12 @@ const Todo: React.FC = () => {
               .map((i) => (
                 <div
                   key={i.id}
-                  className="flex justify-between items-center border rounded px-3 py-2"
+                  className="relative flex justify-between items-center border rounded px-3 py-2"
                 >
                   <div>
                     <div className="font-medium">{i.title}</div>
                     <div className="text-sm text-gray-500">
-                      {formatDate(i.endDate)}
-                      {i.time ? ` ${formatTime(i.time)}` : ""}
+                      {formatDate(i.endDate)} {formatTime(i.time!)}
                     </div>
                   </div>
                   <div className="space-x-1">

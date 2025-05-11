@@ -1,11 +1,3 @@
-.app-container {
-  display: flex;
-  width: 100%;
-  height: 100vh;
-  overflow: visible;
-  background: #000;
-}
-
 .week-calendar {
   width: 60%;
   min-width: 40%;
@@ -83,4 +75,49 @@
 .main-content {
   flex: 1;
   overflow: hidden;
+}
+
+.day {
+  position: relative;
+  padding-bottom: 1.5rem;
+}
+
+.task-dots {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  display: flex;
+  gap: 2px;
+}
+
+/* base style for all dots */
+.task-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+/* colored variants */
+.task-dot.notStarted {
+  background: red;
+}
+
+.task-dot.inProgress {
+  background: blue;
+}
+
+.task-dot.completed {
+  background: green;
+}
+
+.todo-item {
+  font-size: 0.75rem;
+  margin-top: 2px;
+  padding: 2px 4px;
+  background: var(--calendar-separator);
+  border-radius: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

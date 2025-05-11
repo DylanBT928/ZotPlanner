@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import type { TodoItem } from "./Todo";
 import "./WeekCalendar.css";
 
 function getStartOfWeek(date: Date) {
@@ -15,7 +16,10 @@ function formatDateRange(start: Date, end: Date) {
   )} – ${end.toLocaleDateString(undefined, opts)}`;
 }
 
-const WeekCalendar: React.FC = () => {
+interface WeekCalendarProps {
+  items: TodoItem[];
+}
+const WeekCalendar: React.FC<WeekCalendarProps> = ({ items }) => {
   const [start, setStart] = useState(getStartOfWeek(new Date()));
   const days = Array.from({ length: 7 }, (_, i) => {
     const d = new Date(start);
@@ -44,14 +48,23 @@ const WeekCalendar: React.FC = () => {
         <button onClick={nextWeek}>&gt;</button>
       </div>
       <div className="calendar-days">
-        {days.map((d, i) => (
-          <div key={i} className="day">
-            <div className="weekday">
-              {d.toLocaleDateString(undefined, { weekday: "short" })}
+        {days.map((d, i) => {
+          const iso = d.toISOString().slice(0, 10);
+          const dayTasks = items.filter((t) => t.endDate === iso);
+          return (
+            <div key={i} className="day">
+              <div className="weekday">
+                {d.toLocaleDateString(undefined, { weekday: "short" })}
+              </div>
+              <div className="day-number">{d.getDate()}</div>
+              {dayTasks.map((t) => (
+                <div key={t.id} className="todo-item">
+                  {t.title}
+                </div>
+              ))}
             </div>
-            <div className="day-number">{d.getDate()}</div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
