@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { SignatureV4 } from "@aws-sdk/signature-v4";
 import { Sha256 } from "@aws-crypto/sha256-browser";
 import { HttpRequest } from "@aws-sdk/protocol-http";
+import "./Settings.css";
 
 const accessKeyIdPut = import.meta.env.VITE_AWS_ACCESS_KEY_ID_PUT as string;
 const secretAccessKeyPut = import.meta.env
@@ -26,12 +27,11 @@ const apiHostGet = "vc50an6o9e.execute-api.us-west-2.amazonaws.com";
 interface ParsedClass {
   id: string;
   name: string;
-  // …other fields
 }
 
 const Settings: React.FC = () => {
   const [file, setFile] = useState<File>();
-  const [sessionId, setSessionId] = useState<string>("");
+  const [_sessionId, setSessionId] = useState<string>("");
   const [classes, setClasses] = useState<ParsedClass[]>([]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -122,43 +122,31 @@ const Settings: React.FC = () => {
 
   return (
     <div className="tab-content">
-      <form onSubmit={handleSubmit}>
-        <input type="file" accept=".txt,.pdf" onChange={handleOnChange} />
-        <button type="submit">Submit</button>
-      </form>
+      <div className="settings-container">
+        <form onSubmit={handleSubmit}>
+          <input
+            type="file"
+            accept=".txt,.pdf"
+            onChange={handleOnChange}
+            className="settings-button"
+          />
+          <button type="submit" className="settings-button">
+            Submit
+          </button>
+        </form>
 
-      {sessionId && (
-        <button onClick={() => fetchClasses(sessionId)}>Refresh Classes</button>
-      )}
-
-      {classes.length > 0 && (
-        <div className="settings-classes">
-          <h3>Classes for "{sessionId}"</h3>
-          <ul>
-            {classes.map((c, idx) => (
-              <li key={c.id ?? idx}>{c.name}</li>
-            ))}
-          </ul>
-          {/* Raw JSON output box */}
-          <div style={{ marginTop: "1rem" }}>
-            <h4>Raw JSON Response</h4>
-            <textarea
-              readOnly
-              rows={8}
-              style={{
-                width: "100%",
-                fontFamily: "monospace",
-                fontSize: "0.875rem",
-                padding: "0.5rem",
-                border: "1px solid #ccc",
-                borderRadius: "4px",
-                background: "#505050",
-              }}
-              value={JSON.stringify(classes, null, 2)}
-            />
+        {classes.length > 0 && (
+          <div className="settings-classes">
+            <div className="settings-json-box">
+              <textarea
+                readOnly
+                className="settings-json-textarea"
+                value={JSON.stringify(classes, null, 2)}
+              />
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

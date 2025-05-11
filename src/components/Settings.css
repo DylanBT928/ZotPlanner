@@ -1,0 +1,80 @@
+.settings-json-box {
+  margin-top: 1rem;
+}
+.settings-json-box h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: var(--text);
+}
+.settings-json-textarea {
+  width: 100%;
+  font-family: monospace;
+  font-size: 0.875rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #f9f9f9;
+  color: #333;
+  resize: vertical;
+}
+.dark .settings-json-textarea {
+  background: #2d2d2d;
+  border-color: #555;
+  color: #eee;
+}
+
+/* Theme‐aware buttons & file input */
+.settings-button {
+  padding: 0.5rem 1rem;
+  margin-top: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--button-bg);
+  color: var(--button-text);
+  cursor: pointer;
+}
+.settings-button:hover {
+  background: var(--button-hover-bg);
+}
+
+/* Dark mode overrides */
+.dark .settings-button {
+  background: var(--button-bg-dark);
+  color: var(--button-text-dark);
+  border-color: var(--border-dark);
+}
+.dark .settings-button:hover {
+  background: var(--button-hover-bg-dark);
+}
+
+.settings-button[type="file"] {
+  padding: 0;
+  margin-top: 0.5rem;
+}
+.settings-button[type="file"]::file-selector-button,
+.settings-button::-webkit-file-upload-button {
+  padding: 0.5rem 1rem;
+  margin-right: 0.5rem;
+  border: 1px solid #818181;
+  border-radius: 4px;
+  background: var(--button-bg);
+  color: var(--button-text);
+  cursor: pointer;
+  font: inherit;
+}
+.settings-button[type="file"]::file-selector-button:hover,
+.settings-button::-webkit-file-upload-button:hover {
+  background: var(--button-hover-bg);
+}
+
+/* Dark mode for the file-selector button */
+.dark .settings-button[type="file"]::file-selector-button,
+.dark .settings-button::-webkit-file-upload-button {
+  background: var(--button-bg-dark);
+  color: var(--button-text-dark);
+  border-color: var(--border-dark);
+}
+.dark .settings-button[type="file"]::file-selector-button:hover,
+.dark .settings-button::-webkit-file-upload-button:hover {
+  background: var(--button-hover-bg-dark);
+}
