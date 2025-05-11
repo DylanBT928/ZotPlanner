@@ -34,6 +34,10 @@
   font-weight: 700;
 }
 
+.calendar-arrow {
+  color: var(--text);
+}
+
 .calendar-days {
   flex: 1 1 auto;
   display: grid;
@@ -69,6 +73,7 @@
 
 .day-number {
   margin-top: 4px;
+  margin-bottom: 4px;
   font-weight: bold;
 }
 
@@ -80,6 +85,12 @@
 .day {
   position: relative;
   padding-bottom: 1.5rem;
+  border-style: solid;
+  border-color: var(--border-color);
+  border-width: 1px;
+  max-width: 8.5vw;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .task-dots {
@@ -107,7 +118,6 @@
   border-radius: 4px;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .inProgress {
@@ -118,7 +128,6 @@
   border-radius: 4px;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .completed {
@@ -129,5 +138,4 @@
   border-radius: 4px;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
 }
